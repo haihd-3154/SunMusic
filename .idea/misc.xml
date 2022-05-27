@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/drawable/ic_baseline_pause_24.xml" value="0.1795" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/drawable/ic_next.xml" value="0.1795" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/drawable/ic_pause.xml" value="0.1795" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/drawable/ic_play.xml" value="0.1795" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/drawable/ic_previous.xml" value="0.1795" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/layout/fragment_item_list.xml" value="0.22826086956521738" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/layout/fragment_play_list_list.xml" value="0.22826086956521738" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/layout/fragment_player.xml" value="0.1" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/layout/fragment_playlist.xml" value="0.22826086956521738" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusic/app/src/main/res/layout/item_song_layout.xml" value="0.2" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.18" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/drawable/ic_launcher_background.xml" value="0.18" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/drawable/ic_music_notification.xml" value="0.18" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/drawable/ic_next.xml" value="0.18" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/drawable/ic_pause.xml" value="0.142" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/drawable/ic_play.xml" value="0.142" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/drawable/ic_previous.xml" value="0.142" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/layout/item_song_layout.xml" value="0.1296875" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/layout/notification_chanel.xml" value="0.24954710144927536" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.142" />
+        <entry key="..\:/My file/Base Folder/Sun_Project/SunMusicApp/SunMusic/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.142" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

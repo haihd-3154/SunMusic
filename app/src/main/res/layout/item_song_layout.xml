@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="@dimen/margin_unit"
+        android:layout_marginEnd="@dimen/margin_unit"
+        android:layout_marginBottom="@dimen/margin_medium">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/song_item_height">
+
+            <ImageView
+                android:id="@+id/img_item_album"
+                android:layout_width="@dimen/song_item_img_weight"
+                android:layout_height="@dimen/song_item_img_weight"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/img_margin"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/img_album_default" />
+
+            <ImageView
+                android:id="@+id/img_playing"
+                android:layout_width="@dimen/song_item_gif"
+                android:layout_height="@dimen/song_item_gif"
+                android:layout_marginTop="@dimen/img_margin"
+                android:layout_marginEnd="@dimen/margin_medium"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/playing" />
+
+            <TextView
+                android:id="@+id/txt_item_title"
+                android:layout_width="@dimen/zero_dimen"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_medium"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:ellipsize="marquee"
+                android:maxLines="1"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/img_playing"
+                app:layout_constraintStart_toEndOf="@id/img_item_album"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/txt_item_author"
+                android:layout_width="@dimen/zero_dimen"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin_medium"
+                android:layout_marginTop="@dimen/margin_unit"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:ellipsize="end"
+                android:maxLines="1"
+                app:layout_constraintEnd_toStartOf="@id/img_playing"
+                app:layout_constraintStart_toEndOf="@id/img_item_album"
+                app:layout_constraintTop_toBottomOf="@id/txt_item_title" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</RelativeLayout>
