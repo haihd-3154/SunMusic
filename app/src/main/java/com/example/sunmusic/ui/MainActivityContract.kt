@@ -10,8 +10,7 @@ interface MainActivityContract {
         fun getSongsSuccess(l: MutableList<Song>)
         fun getSongsFailure()
         fun displaySongStarted(song: Song, position: Int)
-        fun displaySongPaused()
-        fun displaySongPlayed()
+        fun displaySongPausedOrPlaying(state : Boolean)
         fun displaySongStopped()
         fun displaySeekProgress(position: Int)
     }
