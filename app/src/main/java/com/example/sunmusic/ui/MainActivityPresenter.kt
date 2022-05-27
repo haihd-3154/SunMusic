@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.example.sunmusic.action.service.MusicService
-import com.example.sunmusic.data.source.local.LocalMusic
 import com.example.sunmusic.data.model.Song
 import com.example.sunmusic.data.repository.SongRepository
 import com.example.sunmusic.data.source.OnResultCallBack
@@ -21,7 +20,6 @@ class MainActivityPresenter(
 
     private lateinit var mService: MusicService
     private var localBroadcastManager: LocalBroadcastManager?=null
-    private var sList = mutableListOf<Song>()
     private var mBound: Boolean = false
     private var currentSong: Song? = null
     private var seekBarTemp: Boolean = false
@@ -31,6 +29,7 @@ class MainActivityPresenter(
             val binder = service as MusicService.MyBinder
             mService = binder.getService()
             mBound = true
+            mService.sendState()
         }
 
         override fun onServiceDisconnected(arg0: ComponentName) {
@@ -45,34 +44,20 @@ class MainActivityPresenter(
                     val song = intent.getParcelableExtra<Song>(SONG_EXTRA)
                     currentSong = song
                     song?.let {
-                        mView.displaySongStarted(it, getCurrentPosition())
-                        mView.displaySeekProgress(0)
+                        mView.displaySongStarted(it, mService.mPosition)
+                        mView.displaySongPausedOrPlaying(mService.isPlaying())
+                        mView.displaySeekProgress(mService.currentPosition())
                     }
+                }
+                MusicAction.PLAY.name -> {
+                    mView.displaySongPausedOrPlaying(true)
+                }
+                MusicAction.PAUSE.name ->{
+                    mView.displaySongPausedOrPlaying(false)
                 }
                 MusicAction.TIME.name -> {
                     val time = intent.getIntExtra(TIME_EXTRA,0)
                     mView.displaySeekProgress(time)
-                }
-                else -> {}
-            }
-        }
-    }
-    private var myNotificationReceiver = object : BroadcastReceiver() {
-        override fun onReceive(context: Context, intent: Intent) {
-            when (intent.getStringExtra(ACTION_EXTRA)) {
-                MusicAction.PAUSE.name -> {
-                    handlePlayOrPause()
-                }
-                MusicAction.PLAY.name -> {
-                    handlePlayOrPause()
-                }
-                MusicAction.NEXT.name -> {
-                    handlePlayNext()
-                }
-                MusicAction.PREV.name -> {
-                    handlePlayPrevious()
-                }
-                MusicAction.STOP.name -> {
                 }
                 else -> {}
             }
@@ -85,9 +70,8 @@ class MainActivityPresenter(
             mView.getSongsFailure()
         } else {
             songRepository.getData(object : OnResultCallBack<MutableList<Song>> {
-                override fun onSuccess(list: MutableList<Song>) {
-                    sList = list
-                    mView.getSongsSuccess(sList)
+                override fun onSuccess(listOfMedia: MutableList<Song>) {
+                    mView.getSongsSuccess(listOfMedia)
                 }
 
                 override fun onError(message: String) {
@@ -100,13 +84,11 @@ class MainActivityPresenter(
     override fun registerReceiver(context: Context) {
         localBroadcastManager = LocalBroadcastManager.getInstance(context)
         localBroadcastManager?.registerReceiver(myLocalReceiver, IntentFilter(LOCAL_BROADCAST_ACTION))
-        context.registerReceiver(myNotificationReceiver, IntentFilter(NOTIFICATION_BROADCAST_ACTION))
     }
 
     override fun unregisterReceiver(context: Context) {
         mBound = false
         localBroadcastManager?.unregisterReceiver(myLocalReceiver)
-        context.unregisterReceiver(myNotificationReceiver)
     }
 
     override fun bindService(context: ContextWrapper) {
@@ -121,36 +103,18 @@ class MainActivityPresenter(
 
     override fun handlePlayOrPause() {
         if (mService.isPlaying()) {
-            mView.displaySongPaused()
             mService.pauseSong()
         } else {
-            mView.displaySongPlayed()
             mService.playSong()
         }
     }
 
     override fun handlePlayNext() {
-        val position = getCurrentPosition()
-        val nextSong = if (position == sList.size - 1) {
-            sList.first()
-        } else if (position >= 0) {
-            sList[position + 1]
-        } else {
-            sList.first()
-        }
-        mService.startSong(nextSong)
+        mService.nextSong()
     }
 
     override fun handlePlayPrevious() {
-        val position = getCurrentPosition()
-        val previousSong = if (position == 0) {
-            sList.last()
-        } else if (position < sList.size && position > 0) {
-            sList[position - 1]
-        } else {
-            sList.first()
-        }
-        mService.startSong(previousSong)
+        mService.prevSong()
     }
 
     override fun handleSeekBarChanging() {
@@ -165,13 +129,6 @@ class MainActivityPresenter(
         } else {
             mService.updateTime(position)
         }
-    }
-
-    private fun getCurrentPosition(): Int {
-        currentSong?.let {
-            return sList.indexOfFirst { song -> song.id == currentSong?.id }
-        }
-        return 0
     }
 
     private fun checkReadPermission(context: Context): Boolean {
