@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,15 +18,13 @@ import com.example.sunmusic.data.repository.SongRepository
 import com.example.sunmusic.data.source.local.LocalMusic
 import com.example.sunmusic.databinding.ActivityMainBinding
 import com.example.sunmusic.ui.adapter.SongsAdapter
-import com.example.sunmusic.utils.ALBUM_EXTERNAL_URL
-import com.example.sunmusic.utils.READ_PERMISSION_REQUEST_CODE
-import com.example.sunmusic.utils.SONG_EXTRA
+import com.example.sunmusic.utils.*
 
 class MainActivity : AppCompatActivity(), MainActivityContract.View,
     SongsAdapter.ItemClickListener {
 
     private lateinit var binding: ActivityMainBinding
-    private var mMainActivityPresenter =
+    private var mMainActivityPresenter : MainActivityContract.Presenter =
         MainActivityPresenter(this, SongRepository.getInstance(LocalMusic.getInstance(this)))
     private var songsAdapter = SongsAdapter(this)
     private var sList = mutableListOf<Song>()
@@ -91,8 +88,10 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View,
 
     override fun onDestroy() {
         super.onDestroy()
-        val serviceIntent = Intent(this, MusicService::class.java)
-        stopService(serviceIntent)
+        Intent(this, MusicService::class.java).also{ intent ->
+            stopService(intent)
+        }
+
     }
 
     override fun onRequestPermissionsResult(
@@ -124,12 +123,13 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View,
         songsAdapter.updatePosition(position)
     }
 
-    override fun displaySongPaused() {
-        Glide.with(applicationContext).load(R.drawable.ic_play).into(binding.btnPlay)
-    }
+    override fun displaySongPausedOrPlaying(state : Boolean) {
+        if (state) {
+            Glide.with(applicationContext).load(R.drawable.ic_pause).into(binding.btnPlay)
+        } else{
+            Glide.with(applicationContext).load(R.drawable.ic_play).into(binding.btnPlay)
+        }
 
-    override fun displaySongPlayed() {
-        Glide.with(applicationContext).load(R.drawable.ic_pause).into(binding.btnPlay)
     }
 
     override fun displaySongStopped() {
@@ -155,10 +155,10 @@ class MainActivity : AppCompatActivity(), MainActivityContract.View,
     }
 
     override fun onItemClick(position: Int) {
-        val song = sList[position]
         val bundle = Bundle()
         val serviceIntent = Intent(this, MusicService::class.java)
-        bundle.putParcelable(SONG_EXTRA, song)
+        bundle.putParcelableArrayList(LIST_SONG_EXTRA, sList as ArrayList<Song>)
+        bundle.putInt(POSITION_EXTRA,position)
         serviceIntent.putExtras(bundle)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(serviceIntent)

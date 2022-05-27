@@ -100,13 +100,9 @@ class MyNotificationManager(private val service: Service) {
                     NotificationManager.IMPORTANCE_LOW
                 )
                 createNotificationChannel(mChannel)
-                service.startForeground(NOTIFICATION_ID, notification)
             }
-            else{
-                notify(NOTIFICATION_ID, notification)
-            }
+            service.startForeground(NOTIFICATION_ID, notification)
         }
-
     }
 
     fun clearNotifications() {
