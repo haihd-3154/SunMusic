@@ -22,20 +22,11 @@ class MusicService : Service(), MusicCallback {
     private var myNotificationReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             when (intent.getStringExtra(ACTION_EXTRA)) {
-                MusicAction.PAUSE.name -> {
-                    pauseSong()
-                }
-                MusicAction.PLAY.name -> {
-                    playSong()
-                }
-                MusicAction.NEXT.name -> {
-                    nextSong()
-                }
-                MusicAction.PREV.name -> {
-                    prevSong()
-                }
-                MusicAction.STOP.name -> {
-                }
+                MusicAction.PAUSE.name -> pauseSong()
+                MusicAction.PLAY.name -> playSong()
+                MusicAction.NEXT.name -> nextSong()
+                MusicAction.PREV.name -> prevSong()
+                MusicAction.STOP.name -> {}
                 else -> {}
             }
         }
